@@ -13,52 +13,106 @@
       Organize a Farmer's Market!
     </div>
 
-    <span class="options">Select what you're looking for.</span>
+    <span class="options" style="padding-left:10px; font-size:22px;" >Select what you're looking for.</span>
     <br><br>
-    <form action="">
-      <div class="criteria1" id="low-income" onclick="highlight(this.id)">Low income population</div>
 
-      <div class="criteria2" id="high-pop" onclick="highlight(this.id)">High population density area</div>
+      <div class="criteria1" id="low-income" onclick="highlight1(this.id)">Low income populations</div>
 
-      <div class="criteria3" id="co-op" onclick="highlight(this.id)">Close proximity to co-op markets</div>
+      <div class="criteria2" id="church" onclick="highlight2(this.id)">Close proximity to churches</div>
 
-      <div class="criteria4" id="crop-yield" onclick="highlight(this.id)">Close proximity to high crop yields</div>
+      <div class="criteria3" id="healthy-food" onclick="highlight3(this.id)">Areas with healthy food priority</div>
 
-      <div class="criteria5" id="church" onclick="highlight(this.id)">Close proximity to a church</div>
-      <br>
-    </form>
+  
 
 
-  </div>
-  <div id="pac-container">
-    <input id="pac-input" type="text"
-           placeholder="Enter a location">
+
+
   </div>
 </div>
 
 <div id="map"></div>
 
 <script>
-  var clicked = false
+  var click1 = false
+  var click2 = false
+  var click3 = false
+  var click4 = false
   // This example requires the Places library. Include the libraries=places
   // parameter when you first load the API. For example:
   // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-  function highlight(id) {
-    if (clicked == true) {
+  function highlight1(id) {
+    if (click1 == true) {
       document.getElementById(id).style.backgroundColor = "white";
-      clicked = false;
+      map.data.forEach(function(feature) {
+    // If you want, check here for some constraints.
+    map.data.remove(feature);
+});
+      click1 = false;
     }
     else {
       document.getElementById(id).style.backgroundColor = "lightblue";
-      clicked = true;
+      map.data.loadGeoJson('https://opendata.arcgis.com/datasets/4552d8a9271f41878319e89f612ac91a_259.geojson')
+      click1 = true;
     }
   }
+
+  function highlight2(id) {
+    if (click2 == true) {
+      document.getElementById(id).style.backgroundColor = "white";
+      map.data.forEach(function(feature) {
+    // If you want, check here for some constraints.
+    map.data.remove(feature);
+});
+      click2 = false;
+    }
+    else {
+      document.getElementById(id).style.backgroundColor = "lightblue";
+      map.data.loadGeoJson('https://opendata.arcgis.com/datasets/51cd2ffaea2e4579aace5a1d4f0de71f_0.geojson')
+      click2 = true;
+    }
+  }
+
+
+  function highlight3(id) {
+    if (click3 == true) {
+      document.getElementById(id).style.backgroundColor = "white";
+      map.data.forEach(function(feature) {
+    // If you want, check here for some constraints.
+    map.data.remove(feature);
+});
+      click3 = false;
+    }
+    else {
+      document.getElementById(id).style.backgroundColor = "lightblue";
+      map.data.loadGeoJson('https://opendata.arcgis.com/datasets/9f6e3610009842a6ba2ecf6292d69046_200.geojson')
+      click3 = true;
+    }
+  }
+
+  function highlight4(id) {
+    if (click4 == true) {
+      document.getElementById(id).style.backgroundColor = "white";
+      map.data.forEach(function(feature) {
+    // If you want, check here for some constraints.
+    map.data.remove(feature);
+});
+      click4 = false;
+    }
+    else {
+      document.getElementById(id).style.backgroundColor = "lightblue";
+      map.data.loadGeoJson('https://opendata.arcgis.com/datasets/2abfabb597c84189973ddb91ec7fc3c4_416.geojson')
+      click4 = true;
+    }
+  }
+
+
 
   function addInfoWindow(marker, message) {
 
     var infoWindow = new google.maps.InfoWindow({
       content: message
     });
+
 
     google.maps.event.addListener(marker, 'click', function () {
       if (infoWindow.opened == true) {
@@ -70,12 +124,15 @@
     });
   }
 
+  var map;
+
   function initMap() {
     google.maps.InfoWindow.prototype.opened = false;
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 39.2582, lng: -76.7131},
       zoom: 13
     });
+
     var card = document.getElementById('pac-card');
     var input = document.getElementById('pac-input');
     var types = document.getElementById('type-selector');
