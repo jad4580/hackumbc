@@ -8,16 +8,48 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
-html, body, h1 {
-    font-family: "Arial";
+#mainBody {
+    background-image: url("//C:/Users/natal/Desktop/corn.jpg");
+    background-size: cover;
+    text-align: center;
+    text-shadow:
+		-1px -1px 0 #fff,
+		1px -1px 0 #fff,
+		-1px 1px 0 #fff,
+        1px 1px 0 #fff;
+} 
+
+h1, h4 {
+    font-family:'Roboto',sans-serif;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+.mainButton{
+    display:inline-block;
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    background-color:#4eb5f1;
+    text-align:center;
+    transition: all 0.2s;
+    }
+.mainButton:hover{
+    background-color:#4095c6;
 }
 
 #farmerImg {
-    width:400px;
-    height:400px;
+    width:340px;
+    height:340px;
 }
 
 #description {
