@@ -10,7 +10,7 @@
 <div class="pac-card">
   <div>
     <div id="title">
-      Find the nearest farmer's market!
+      Find the nearest farmer's market in MD!
     </div>
     <div id="type-selector" class="pac-controls">
       <input type="radio" name="type" id="changetype-all" checked="checked">
@@ -35,32 +35,16 @@
            placeholder="Enter a location">
   </div>
 </div>
-<div class="container">
+<div id="container" style="visibility: hidden;">
   <div class="items">
-    <div class="items-body">
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
+    <div id="items-body">
     </div>
   </div>
 </div>
 <div id="map"></div>
 <div id="infowindow-content">
   <img src="" width="16" height="16" id="place-icon">
-  <span id="place-name"  class="title"></span><br>
+  <span id="place-name" class="title"></span><br>
   <span id="place-address"></span>
 </div>
 <script>
@@ -88,14 +72,24 @@
     google.maps.InfoWindow.prototype.opened = false;
     var map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 39.2582, lng: -76.7131},
-      zoom: 13
+      zoom: 13,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.RIGHT_TOP
+      },
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+      },
+      scaleControl: true,
+      streetViewControl: true,
+      streetViewControlOptions: {
+        position: google.maps.ControlPosition.LEFT_TOP
+      },
+      fullscreenControl: false
     });
-    var card = document.getElementById('pac-card');
     var input = document.getElementById('pac-input');
-    var types = document.getElementById('type-selector');
-    var strictBounds = document.getElementById('strict-bounds-selector');
-
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -116,16 +110,23 @@
       const response = await fetch('http://localhost:3000/markets');
       const myJson = await response.json(); //extract JSON from the http response
 
+
       var features = myJson.features;
-      console.log(features);
+      // console.log(features);
       for (var i = 0; i < features.length; i++) {
         var properties = features[i].properties;
         var geometry = features[i].geometry;
 
         var contentString =
-                '<div id="bodyContent">'+
-                '<b>' + properties.Name + '</b>'+
+                '<div id="bodyContent">' +
+                '<b>' + properties.Name + '</b>' +
                 '</div>';
+
+        // var market_html = '<div class="items-body-content">' +
+        //     '<span>' + properties.Name + '</span>' +
+        //     '<i class="fa fa-angle-right"></i>' +
+        //     '</div>';
+        // document.getElementById('items-body').innerHTML += market_html;
 
         var marker = new google.maps.Marker({
           position: {lat: geometry.coordinates[1], lng: geometry.coordinates[0]},
@@ -146,7 +147,8 @@
       icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
     });
 
-    autocomplete.addListener('place_changed', function() {
+    autocomplete.addListener('place_changed', function () {
+      document.getElementById('items-body').innerHTML = "";
       infowindow.close();
       marker.setVisible(false);
       var place = autocomplete.getPlace();
@@ -157,9 +159,56 @@
         return;
       }
 
+      var service = new google.maps.DistanceMatrixService;
+
       // If the place has a geometry, then present it on a map.
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
+        var changed_lat = place.geometry.location.lat();
+        var changed_lng = place.geometry.location.lng();
+
+        const userAction = async () => {
+          const response = await fetch('http://localhost:3000/markets');
+          const myJson = await response.json(); //extract JSON from the http response
+          // console.log(myJson);
+
+          var features = myJson.features;
+          // console.log(features);
+          for (var i = 0; i < features.length; i++) {
+            var geometry = features[i].geometry;
+            var lat = geometry.coordinates[1];
+            var lng = geometry.coordinates[0];
+
+            var origin = new google.maps.LatLng(changed_lat, changed_lng);
+            var dest = new google.maps.LatLng(lat, lng);
+
+            service.getDistanceMatrix({
+              origins: [origin],
+              destinations: [dest],
+              travelMode: 'DRIVING',
+              unitSystem: google.maps.UnitSystem.METRIC,
+              avoidHighways: false,
+              avoidTolls: false
+            }, callback);
+
+            function callback(response, status) {
+              if (status == 'OK') {
+                // console.log(response);
+                if (response.rows[0].elements[0].duration.value < 900) {
+                  var market_html = '<div class="items-body-content">' +
+                          '<span>' + response.destinationAddresses[0] + '</span>' +
+                          '<i class="fa fa-angle-right"></i>' +
+                          '</div>';
+                  document.getElementById('items-body').innerHTML += market_html;
+                }
+              }
+            }
+          }
+        };
+
+        userAction();
+        document.getElementById('container').style.visibility = "visible";
+        // https://maps.googleapis.com/maps/api/distancematrix/json?origins=39.2520211,-76.7071216&destinations=39.32806999998833,-76.6109829997113&mode=driving&language=en-EN&sensor=false&key=AIzaSyBt8S9YJAPUvemh9KHONF_puV1lBja9qkA
       } else {
         map.setCenter(place.geometry.location);
         map.setZoom(17);  // Why 17? Because it looks good.
@@ -186,7 +235,7 @@
     // Autocomplete.
     function setupClickListener(id, types) {
       var radioButton = document.getElementById(id);
-      radioButton.addEventListener('click', function() {
+      radioButton.addEventListener('click', function () {
         autocomplete.setTypes(types);
       });
     }
@@ -197,10 +246,17 @@
     setupClickListener('changetype-geocode', ['geocode']);
 
     document.getElementById('use-strict-bounds')
-            .addEventListener('click', function() {
+            .addEventListener('click', function () {
               console.log('Checkbox clicked! New state=' + this.checked);
               autocomplete.setOptions({strictBounds: this.checked});
             });
+
+    if (document.getElementById('items-body').innerHTML == "") {
+      var market_html = '<div>' +
+              '<span>No grocery markets nearby!</span>' +
+              '</div>';
+      document.getElementById('items-body').innerHTML += market_html;
+    }
   }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt8S9YJAPUvemh9KHONF_puV1lBja9qkA&libraries=places&callback=initMap"
