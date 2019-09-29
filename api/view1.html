@@ -42,15 +42,6 @@
     <input id="pac-input" type="text"
            placeholder="Enter a location">
   </div>
-    <div style="margin: 10px 20px 20px 20px;">
-        I would like to get there within:
-        <select id="ddlViewBy" style="float: right;
-    height: 25px;">
-            <option value="1">5 minutes</option>
-            <option value="2" selected="selected">10 minutes</option>
-            <option value="3">15 minutes</option>
-        </select>
-    </div>
 </div>
 <div id="container" style="visibility: hidden;">
     <div class="items">
@@ -223,7 +214,7 @@
                     console.log(response);
                     if (status == 'OK') {
                         // console.log(response);
-                        if (response.rows[0].elements[0].duration.value < 900) {
+                        if (response.rows[0].elements[0].duration.value < 1800) {
                             var market_html = '<div class="items-body-content" onclick=style="display: inline-block;">' +
                                 '<a href=\"' + item.properties.Website + '\"><span>' + item.properties.Name  + '<br /></span></a>' +
                                 '<span style=\"float: right\">' + response.rows[0].elements[0].duration.text + '</span>' +
@@ -266,16 +257,7 @@
             infowindow.open(map, marker);
         });
 
-        // Sets a listener on a radio button to change the filter type on Places
-        // Autocomplete.
-        function setupClickListener(id, types) {
-            var radioButton = document.getElementById(id);
-            radioButton.addEventListener('click', function () {
-                autocomplete.setTypes(types);
-            });
-        }
-
-    setupClickListener('changetype-all', []);
+    setupClickListener('changetype-all-days', []);
     setupClickListener('changetype-monday', ['monday']);
     setupClickListener('changetype-tuesday', ['tuesday']);
     setupClickListener('changetype-wednesday', ['wednesday']);
