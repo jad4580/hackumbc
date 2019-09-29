@@ -8,7 +8,19 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    text-align: center;
+    background-image: url("C:\Users\natal\Desktop\corn.jpg")
 }
+
+html, body, h1 {
+    font-family: "Arial";
+}
+
+html, body, img {
+    width:400px;
+    height:400px;
+}
+
 #description {
     font-family: Roboto;
     font-size: 15px;
