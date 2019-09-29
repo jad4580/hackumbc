@@ -1,0 +1,166 @@
+/* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+#map {
+    height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#description {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+#infowindow-content .title {
+    font-weight: bold;
+}
+
+#infowindow-content {
+    display: none;
+}
+
+#map #infowindow-content {
+    display: inline;
+}
+
+.pac-card {
+    margin: 10px 10px 0 0;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    font-family: Roboto;
+    top: 50px;
+    left: 10px;
+    position: absolute;
+    z-index: 1;
+}
+
+#pac-container {
+    padding-bottom: 12px;
+    margin-right: 12px;
+}
+
+.pac-controls {
+    display: inline-block;
+    padding: 5px 20px;
+}
+
+.pac-controls label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+#pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin: 12px 20px;
+    padding: 12px 20px;
+    text-overflow: ellipsis;
+    width: 400px;
+}
+
+#pac-input:focus {
+    border-color: #4d90fe;
+}
+
+#title {
+    color: #fff;
+    background-color: #4d90fe;
+    font-size: 25px;
+    font-weight: 500;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+}
+
+* {
+    box-sizing: border-radius;
+    font-family: 'Rubik', sans-serif;
+}
+
+.container {
+    /* border: 1px solid black; */
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* bottom: 0; */
+    left: 10px;
+    /* margin: auto; */
+    /* display: grid; */
+    /* place-items: center; */
+    /* background-color: #128CFC; */
+    height: 200px;
+    width: 505px;
+    margin-top: 230px;
+    z-index: 1;
+}
+
+.items {
+    background: #fffffe;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    border-top: 10px solid #4d90fe;
+}
+
+.items-head p {
+    padding: 5px 20px;
+    margin: 10px;
+    color: #0B5AA2;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.items-head hr {
+    width: 20%;
+    margin: 0px 30px;
+    border: 1px solid #0B5AA2;
+}
+
+.items-body {
+    padding: 10px;
+    margin: 10px;
+    display: grid;
+    grid-gap: 10px;
+}
+
+.items-body-content {
+    padding: 10px;
+    padding-right: 0px;
+    display: grid;
+    grid-template-columns: 10fr 1fr;
+    font-size: 13px;
+    grid-gap: 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.items-body-content:hover {
+    border-radius: 15px;
+    border: 1px solid #0B5AA2;
+}
+
+.items-body-content i {
+    align-self: center;
+    font-size: 15px;
+    color: #0B5AA2;
+    font-weight: bold;
+    animation: icon 1.5s infinite forwards;
+}
+
+@keyframes icon {
+    0%,100% {
+        transform: translate(0px);
+    }
+    50% {
+        transform: translate(3px);
+    }
+}
+
