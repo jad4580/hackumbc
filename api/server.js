@@ -4,6 +4,8 @@ var http = require('http');
 var fs = require('fs');
 const app = express();
 
+app.use(cors());
+
 app.get('/markets', (req, response) => {
     response.send({
         "type": "FeatureCollection",
