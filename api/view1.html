@@ -13,28 +13,28 @@
       Find the nearest farmer's market in MD!
     </div>
     <div id="type-selector" class="pac-controls">
-      <input type="radio" name="date" id="changetype" value="All" checked="checked">
+      <input type="radio" name="date" id="changetype-all" value="All" checked="checked">
       <label for="changetype-all">All</label>
 
-      <input type="radio" name="date" id="changetype" value="Monday">
+      <input type="radio" name="date" id="changetype-monday" value="Monday">
       <label for="changetype-monday">Monday</label>
 
-      <input type="radio" name="date" id="changetype" value="Tuesday">
+      <input type="radio" name="date" id="changetype-tuesday" value="Tuesday">
       <label for="changetype-tuesday">Tuesday</label>
 
-      <input type="radio" name="date" id="changetype" value="Wednesday">
+      <input type="radio" name="date" id="changetype-wednesday" value="Wednesday">
       <label for="changetype-wednesday">Wednesday</label>
 
-      <input type="radio" name="date" id="changetype" value="Thursday">
+      <input type="radio" name="date" id="changetype-thursday" value="Thursday">
       <label for="changetype-thursday">Thursday</label>
 
-      <input type="radio" name="date" id="changetype" value="Friday">
+      <input type="radio" name="date" id="changetype-friday" value="Friday">
       <label for="changetype-friday">Friday</label>
 
-      <input type="radio" name="date" id="changetype" value="Saturday">
+      <input type="radio" name="date" id="changetype-saturday" value="Saturday">
       <label for="changetype-saturday">Saturday</label>
 
-      <input type="radio" name="date" id="changetype" value="Sunday">
+      <input type="radio" name="date" id="changetype-sunday" value="Sunday">
       <label for="changetype-sunday">Sunday</label>
     </div>
   </div>
@@ -183,7 +183,7 @@
                     var features = myJson.features;
                     // console.log(features);
                     for (var i = 0; i < features.length; i++) {
-                      if(features[i].properties.Day == day) {
+                      if(day == "All" || features[i].properties.Day == day) {
                         var geometry = features[i].geometry;
                         var lat = geometry.coordinates[1];
                         var lng = geometry.coordinates[0];
@@ -257,20 +257,6 @@
             infowindowContent.children['place-address'].textContent = address;
             infowindow.open(map, marker);
         });
-
-    setupClickListener('changetype-all-days', []);
-    setupClickListener('changetype-monday', ['monday']);
-    setupClickListener('changetype-tuesday', ['tuesday']);
-    setupClickListener('changetype-wednesday', ['wednesday']);
-    setupClickListener('changetype-thursday', ['thursday']);
-    setupClickListener('changetype-friday', ['friday']);
-    setupClickListener('changetype-saturday', ['saturday']);
-    setupClickListener('changetype-sunday', ['sunday']);
-
-        document.getElementById('use-strict-bounds')
-            .addEventListener('click', function () {
-              console.log('Checkbox clicked! New state=' + this.checked);
-            });
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt8S9YJAPUvemh9KHONF_puV1lBja9qkA&libraries=places&callback=initMap"
