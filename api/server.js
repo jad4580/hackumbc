@@ -4,7 +4,31 @@ var http = require('http');
 var fs = require('fs');
 const app = express();
 
+const firebase = require("firebase");
+// Required for side-effects
+require("firebase/firestore");
+
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+    apiKey: '### FIREBASE API KEY ###',
+    authDomain: '### FIREBASE AUTH DOMAIN ###',
+    projectId: 'friends2-68adc'
+});
+
+var db = firebase.firestore();
+
 app.use(cors());
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./friends2-68adc-firebase-adminsdk-gdoh4-1f85cc5cb5.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://friends2-68adc.firebaseio.com"
+});
+
+var db = firebase.firestore();
 
 app.get('/markets', (req, response) => {
     response.send({
