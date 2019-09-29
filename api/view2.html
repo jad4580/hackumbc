@@ -10,63 +10,49 @@
 <div class="pac-card">
   <div>
     <div id="title">
-      Find the nearest farmer's market!
+      Organize a Farmer's Market!
     </div>
-    <div id="type-selector" class="pac-controls">
-      <input type="radio" name="type" id="changetype-all" checked="checked">
-      <label for="changetype-all">All</label>
 
-      <input type="radio" name="type" id="changetype-establishment">
-      <label for="changetype-establishment">Establishments</label>
+    <span class="options">Select what you're looking for.</span>
+    <br><br>
+    <form action="">
+      <div class="criteria1" id="low-income" onclick="highlight(this.id)">Low income population</div>
 
-      <input type="radio" name="type" id="changetype-address">
-      <label for="changetype-address">Addresses</label>
+      <div class="criteria2" id="high-pop" onclick="highlight(this.id)">High population density area</div>
 
-      <input type="radio" name="type" id="changetype-geocode">
-      <label for="changetype-geocode">Geocodes</label>
-    </div>
-    <div id="strict-bounds-selector" class="pac-controls">
-      <input type="checkbox" id="use-strict-bounds" value="">
-      <label for="use-strict-bounds">Strict Bounds</label>
-    </div>
+      <div class="criteria3" id="co-op" onclick="highlight(this.id)">Close proximity to co-op markets</div>
+
+      <div class="criteria4" id="crop-yield" onclick="highlight(this.id)">Close proximity to high crop yields</div>
+
+      <div class="criteria5" id="church" onclick="highlight(this.id)">Close proximity to a church</div>
+      <br>
+    </form>
+
+
   </div>
   <div id="pac-container">
     <input id="pac-input" type="text"
            placeholder="Enter a location">
   </div>
 </div>
-<div class="container">
-  <div class="items">
-    <div class="items-body">
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
-      <div class="items-body-content">
-        <span>Blah</span>
-        <i class="fa fa-angle-right"></i>
-      </div>
-    </div>
-  </div>
-</div>
+
 <div id="map"></div>
-<div id="infowindow-content">
-  <img src="" width="16" height="16" id="place-icon">
-  <span id="place-name"  class="title"></span><br>
-  <span id="place-address"></span>
-</div>
+
 <script>
+  var clicked = false
   // This example requires the Places library. Include the libraries=places
   // parameter when you first load the API. For example:
   // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+  function highlight(id) {
+    if (clicked == true) {
+      document.getElementById(id).style.backgroundColor = "white";
+      clicked = false;
+    }
+    else {
+      document.getElementById(id).style.backgroundColor = "lightblue";
+      clicked = true;
+    }
+  }
 
   function addInfoWindow(marker, message) {
 
@@ -117,7 +103,7 @@
       const myJson = await response.json(); //extract JSON from the http response
 
       var features = myJson.features;
-      console.log(features);
+      //console.log(features);
       for (var i = 0; i < features.length; i++) {
         var properties = features[i].properties;
         var geometry = features[i].geometry;
@@ -198,7 +184,7 @@
 
     document.getElementById('use-strict-bounds')
             .addEventListener('click', function() {
-              console.log('Checkbox clicked! New state=' + this.checked);
+            //  console.log('Checkbox clicked! New state=' + this.checked);
               autocomplete.setOptions({strictBounds: this.checked});
             });
   }

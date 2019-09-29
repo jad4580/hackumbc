@@ -276,3 +276,10 @@ h1 {
     visibility: visible;
     opacity: 1;
 }
+
+.criteria1, .criteria2, .criteria3, .criteria4, .criteria5 {
+  padding: 15px 0px 15px 30px;
+  margin: 0 0 0 0;
+  background-color: white;
+
+}
