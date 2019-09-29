@@ -13,28 +13,28 @@
       Find the nearest farmer's market in MD!
     </div>
     <div id="type-selector" class="pac-controls">
-      <input type="radio" name="type" id="changetype-all" checked="checked">
+      <input type="radio" name="date" id="changetype" value="All" checked="checked">
       <label for="changetype-all">All</label>
 
-      <input type="radio" name="type" id="changetype-monday">
+      <input type="radio" name="date" id="changetype" value="Monday">
       <label for="changetype-monday">Monday</label>
 
-      <input type="radio" name="type" id="changetype-tuesday">
+      <input type="radio" name="date" id="changetype" value="Tuesday">
       <label for="changetype-tuesday">Tuesday</label>
 
-      <input type="radio" name="type" id="changetype-wednesday">
+      <input type="radio" name="date" id="changetype" value="Wednesday">
       <label for="changetype-wednesday">Wednesday</label>
 
-      <input type="radio" name="type" id="changetype-thursday">
+      <input type="radio" name="date" id="changetype" value="Thursday">
       <label for="changetype-thursday">Thursday</label>
 
-      <input type="radio" name="type" id="changetype-friday">
+      <input type="radio" name="date" id="changetype" value="Friday">
       <label for="changetype-friday">Friday</label>
 
-      <input type="radio" name="type" id="changetype-saturday">
+      <input type="radio" name="date" id="changetype" value="Saturday">
       <label for="changetype-saturday">Saturday</label>
 
-      <input type="radio" name="type" id="changetype-sunday">
+      <input type="radio" name="date" id="changetype" value="Sunday">
       <label for="changetype-sunday">Sunday</label>
     </div>
   </div>
@@ -174,7 +174,7 @@
                 var changed_lat = place.geometry.location.lat();
                 var changed_lng = place.geometry.location.lng();
 
-                const userAction = async () => {
+                const userAction = async (day) => {
                     const response = await fetch('http://localhost:3000/markets');
                     const myJson = await response.json(); //extract JSON from the http response
                     // console.log(myJson);
@@ -183,7 +183,7 @@
                     var features = myJson.features;
                     // console.log(features);
                     for (var i = 0; i < features.length; i++) {
-
+                      if(features[i].properties.Day == day) {
                         var geometry = features[i].geometry;
                         var lat = geometry.coordinates[1];
                         var lng = geometry.coordinates[0];
@@ -192,6 +192,7 @@
                         var dest = new google.maps.LatLng(lat, lng);
 
                         GoogleMapDistance(origin, dest, features[i]);
+                      }
                     }
                 };
 
@@ -227,7 +228,7 @@
                     }
                 }
 
-                userAction();
+                userAction(document.querySelector('input[name="date"]:checked').value);
                 document.getElementById('container').style.visibility = "visible";
 
                 // https://maps.googleapis.com/maps/api/distancematrix/json?origins=39.2520211,-76.7071216&destinations=39.32806999998833,-76.6109829997113&mode=driving&language=en-EN&sensor=false&key=AIzaSyBt8S9YJAPUvemh9KHONF_puV1lBja9qkA
