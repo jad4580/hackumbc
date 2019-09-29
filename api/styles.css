@@ -43,6 +43,7 @@ h1 {
     text-align:center;
     transition: all 0.2s;
     }
+    
 .mainButton:hover{
     background-color:#4095c6;
 }
