@@ -161,33 +161,33 @@
         var infowindowContent = document.getElementById('infowindow-content');
         infowindow.setContent(infowindowContent);
 
-        const userAction = async () => {
-            const response = await fetch('http://localhost:3000/markets');
-            const myJson = await response.json(); //extract JSON from the http response
-
-            var features = myJson.features;
-            //console.log(features);
-            for (var i = 0; i < features.length; i++) {
-                var properties = features[i].properties;
-                var geometry = features[i].geometry;
-
-                var contentString =
-                    '<div id="bodyContent">' +
-                    '<b>' + properties.Name + '</b>' +
-                    '</div>';
-
-                var marker = new google.maps.Marker({
-                    position: {lat: geometry.coordinates[1], lng: geometry.coordinates[0]},
-                    map: map,
-                    title: properties.Name,
-                });
-                addInfoWindow(marker, contentString);
-                marker.setVisible(true);
-            }
-            // do something with myJson
-        };
-
-        userAction();
+        // const userAction = async () => {
+        //     const response = await fetch('http://localhost:3000/markets');
+        //     const myJson = await response.json(); //extract JSON from the http response
+        //
+        //     var features = myJson.features;
+        //     //console.log(features);
+        //     for (var i = 0; i < features.length; i++) {
+        //         var properties = features[i].properties;
+        //         var geometry = features[i].geometry;
+        //
+        //         var contentString =
+        //             '<div id="bodyContent">' +
+        //             '<b>' + properties.Name + '</b>' +
+        //             '</div>';
+        //
+        //         var marker = new google.maps.Marker({
+        //             position: {lat: geometry.coordinates[1], lng: geometry.coordinates[0]},
+        //             map: map,
+        //             title: properties.Name,
+        //         });
+        //         addInfoWindow(marker, contentString);
+        //         marker.setVisible(true);
+        //     }
+        //     // do something with myJson
+        // };
+        //
+        // userAction();
 
         var marker = new google.maps.Marker({
             map: map,
