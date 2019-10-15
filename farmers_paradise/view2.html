@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Autocomplete</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+<body>
+<div class="pac-card">
+    <div>
+        <div id="title">
+            Organize a Farmer's Market!
+        </div>
+
+        <span class="options" style="padding-left:10px; font-size:22px;">Select what you're looking for.</span>
+        <br><br>
+
+        <div class="criteria1" id="low-income" onclick="highlight1(this.id)">Low income populations</div>
+
+        <div class="criteria2" id="church" onclick="highlight2(this.id)">Close proximity to churches</div>
+
+        <div class="criteria3" id="healthy-food" onclick="highlight3(this.id)">Areas with healthy food priority</div>
+
+
+    </div>
+</div>
+
+<div id="map"></div>
+
+<script src="view2.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt8S9YJAPUvemh9KHONF_puV1lBja9qkA&libraries=places&callback=initMap"
+        async defer></script>
+</body>
+</html>
